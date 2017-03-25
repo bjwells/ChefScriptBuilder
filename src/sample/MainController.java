@@ -23,7 +23,7 @@ public class MainController {
         //not opening for some reason
         //button was clicked
         try{
-            openScene("AttributeList", "Attribute List");
+            openScene("AttributeList.fxml", "Attribute List");
         }
         catch (Exception e)
         {
@@ -40,8 +40,8 @@ public class MainController {
 
     private void openScene(String windowName, String title) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("Open.fxml"));
-        Main.thePrimaryStage.setTitle("Chef Script Builder");
+        Parent root = FXMLLoader.load(getClass().getResource(windowName));
+        Main.thePrimaryStage.setTitle(title);
         Main.thePrimaryStage.setScene(new Scene(root, 600, 275));
         Main.thePrimaryStage.show();
     }
