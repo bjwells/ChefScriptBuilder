@@ -8,12 +8,16 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static Stage thePrimaryStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Open.fxml"));
         primaryStage.setTitle("Chef Script Builder");
         primaryStage.setScene(new Scene(root, 600, 275));
         primaryStage.show();
+
+        thePrimaryStage = primaryStage;
     }
 
 

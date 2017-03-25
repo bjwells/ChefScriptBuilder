@@ -4,11 +4,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OpenController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainController">
    <children>
       <TextField fx:id="txt_file_url" layoutX="30.0" layoutY="50.0" style="-fx-min-width: 490;" />
       <Button fx:id="btn_open" layoutX="520.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleOpenButtonAction" text="Open" />
-      <Button fx:id="btn_new_attribute" layoutX="30.0" layoutY="100.0" mnemonicParsing="false" text="New attribute.rb" />
-      <Button fx:id="btn_new_default" layoutX="150.0" layoutY="100.0" mnemonicParsing="false" text="New default.rb" />
+      <Button fx:id="btn_new_attribute" layoutX="30.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleNewAttributeButtonAction" text="New attribute.rb" />
+      <Button fx:id="btn_new_default" layoutX="150.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleNewDefaultButtonAction" text="New default.rb" />
    </children>
 </Pane>
