@@ -13,6 +13,10 @@ import javafx.scene.Scene;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,6 +53,7 @@ public class MainController {
 
         try{
             createDefaultFile();
+            writeToFile("one" + "\n" + "two" + "\n" + "three", "default.rb");
             openScene("AttributeList.fxml", "Attribute List");
 
         }
@@ -97,7 +102,28 @@ public class MainController {
 
     private void populateAttributes()
     {
-        List<String> values = Arrays.asList("one", "two", "three");
+
+        //List<String> values = Arrays.asList("one", "two", "three");
+        //lst_attributes.setItems(FXCollections.observableArrayList(values));
+
+        List<String> values = readFile("default.rb");
         lst_attributes.setItems(FXCollections.observableArrayList(values));
+    }
+
+    private List<String> readFile(String fileName) {
+
+
+        try {
+            URI uri = this.getClass().getResource(fileName).toURI();
+            List<String> lines = Files.readAllLines(Paths.get(uri),
+                    Charset.defaultCharset());
+
+            return lines;
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
+        return null;
     }
 }
