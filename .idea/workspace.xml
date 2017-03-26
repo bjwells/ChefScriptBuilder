@@ -65,10 +65,11 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="120" column="25" lean-forward="true" selection-start-line="120" selection-start-column="25" selection-end-line="120" selection-end-column="25" />
+            <state relative-caret-position="1176">
+              <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3049#3057#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -512,7 +513,14 @@
       <option name="project" value="LOCAL" />
       <updated>1490539107095</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="got file getting populated">
+      <created>1490545486474</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1490545486474</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -568,7 +576,8 @@
     <MESSAGE value="fixed open scene function" />
     <MESSAGE value="listview fooling around" />
     <MESSAGE value="got list view load working with test data" />
-    <option name="LAST_COMMIT_MESSAGE" value="got list view load working with test data" />
+    <MESSAGE value="got file getting populated" />
+    <option name="LAST_COMMIT_MESSAGE" value="got file getting populated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -585,6 +594,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3049#3057#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -644,6 +654,7 @@
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3049#3057#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -700,10 +711,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="120" column="25" lean-forward="true" selection-start-line="120" selection-start-column="25" selection-end-line="120" selection-end-column="25" />
+        <state relative-caret-position="1176">
+          <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3049#3057#0" expanded="true" />
           </folding>
         </state>
       </provider>

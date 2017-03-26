@@ -17,8 +17,11 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class MainController {
 
@@ -112,15 +115,18 @@ public class MainController {
 
     private List<String> readFile(String fileName) {
 
+        try{
+            Scanner s = new Scanner(new File(fileName));
+            ArrayList<String> list = new ArrayList<String>();
+            while (s.hasNextLine()){
+                list.add(s.nextLine());
+            }
+            s.close();
 
-        try {
-            URI uri = this.getClass().getResource(fileName).toURI();
-            List<String> lines = Files.readAllLines(Paths.get(uri),
-                    Charset.defaultCharset());
-
-            return lines;
-        } catch (Exception e) {
-            e.printStackTrace();
+            return list;
+        }
+        catch (Exception e)
+        {
             JOptionPane.showMessageDialog(null, e.toString());
         }
 
