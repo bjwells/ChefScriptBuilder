@@ -22,6 +22,15 @@ public class MainController {
     private ListView lst_attributes;
 
     @FXML
+    protected void initialize()
+    {
+        if(lst_attributes != null)
+        {
+            populateAttributes();
+        }
+    }
+
+    @FXML
     private void handleOpenButtonAction(ActionEvent event)
     {
         //button was clicked do something
@@ -41,8 +50,7 @@ public class MainController {
         try{
             createDefaultFile();
             openScene("AttributeList.fxml", "Attribute List");
-            //List<String> values = Arrays.asList("one", "two", "three");
-            //lst_attributes.setItems(FXCollections.observableArrayList(values));
+
         }
         catch (Exception e)
         {
@@ -85,5 +93,11 @@ public class MainController {
         PrintWriter writer = new PrintWriter(fileURL, "UTF-8");
         writer.println(content);
         writer.close();
+    }
+
+    private void populateAttributes()
+    {
+        List<String> values = Arrays.asList("one", "two", "three");
+        lst_attributes.setItems(FXCollections.observableArrayList(values));
     }
 }
