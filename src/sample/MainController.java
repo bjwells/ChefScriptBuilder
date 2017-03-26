@@ -13,20 +13,19 @@ import javafx.scene.Scene;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class MainController {
 
+    private File currentFile;
+
     @FXML
     private ListView lst_attributes;
+
+    @FXML
+    private ListView lst_descriptors;
 
     @FXML
     protected void initialize()
@@ -57,7 +56,7 @@ public class MainController {
         try{
             createDefaultFile();
             writeToFile("one" + "\n" + "two" + "\n" + "three", "default.rb");
-            openScene("AttributeList.fxml", "Attribute List");
+            openScene("AttributeList.fxml", "Attribute List", 600, 500);
 
         }
         catch (Exception e)
@@ -72,11 +71,32 @@ public class MainController {
 
     }
 
-    private void openScene(String windowName, String title) throws Exception
+    @FXML
+    private void handleAddNewAttributeButtonAction(ActionEvent event)
+    {
+        //open edit screen
+        try
+        {
+            openScene("EditAttribute.fxml", "Edit Attribute", 600, 500);
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
+    }
+
+    @FXML
+    private void handleNewDescriptorButtonAction(ActionEvent event)
+    {
+        
+    }
+
+    private void openScene(String windowName, String title, int width, int height) throws Exception
     {
         Parent root = FXMLLoader.load(getClass().getResource(windowName));
         Main.thePrimaryStage.setTitle(title);
-        Main.thePrimaryStage.setScene(new Scene(root, 600, 275));
+        Main.thePrimaryStage.setScene(new Scene(root, width, height));
         Main.thePrimaryStage.show();
     }
 
@@ -85,6 +105,8 @@ public class MainController {
         deleteDefaultFile();
         PrintWriter writer = new PrintWriter("default.rb", "UTF-8");
         writer.close();
+
+        this.currentFile = new File("default.rb");
     }
 
     private void deleteDefaultFile()
@@ -105,10 +127,6 @@ public class MainController {
 
     private void populateAttributes()
     {
-
-        //List<String> values = Arrays.asList("one", "two", "three");
-        //lst_attributes.setItems(FXCollections.observableArrayList(values));
-
         List<String> values = readFile("default.rb");
         lst_attributes.setItems(FXCollections.observableArrayList(values));
     }
