@@ -22,6 +22,8 @@ public class EditController {
     @FXML
     protected void initialize()
     {
+        //populate the descriptor list from the line of the file given
+
 
         if(lst_descriptors != null)
         {
@@ -71,10 +73,21 @@ public class EditController {
         toWrite += " = " + value;
 
         try{
-            //should really write to line that was being edited only
             //writeToFile(toWrite, currentFile);
             FileManager fm = new FileManager();
-            fm.writeToFile(MainController.lineEditing, toWrite, MainController.currentFile);
+            if(MainController.lineEditing != -1)
+            {
+                fm.writeToFile(MainController.lineEditing, toWrite, MainController.currentFile);
+            }
+            else
+            {
+                //write to the end of file
+                fm.appendToFile(toWrite, MainController.currentFile);
+            }
+
+            Util ut = new Util();
+            ut.openScene("AttributeList.fxml", "Attribute List", 600, 500);
+
         }
         catch (Exception e)
         {

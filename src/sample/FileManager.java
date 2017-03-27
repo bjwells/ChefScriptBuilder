@@ -3,7 +3,11 @@ package sample;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -44,6 +48,12 @@ public class FileManager {
 
         //call the write to file method, which should clear the file before writing the new content
         writeToFile(fileLines.toString(), file);
+    }
+
+    //appends the content provided to the end of the file given.
+    public void appendToFile(String content, File file) throws Exception
+    {
+        Files.write(file.toPath(), content.getBytes(), StandardOpenOption.APPEND);
     }
 
     //reads a file from the file's name and returns a list of strings, one string for each line
@@ -107,5 +117,47 @@ public class FileManager {
         }
 
         return count;
+    }
+
+    public List<String> getDescriptorsFromFileLine(int lineNumber, File file)
+    {
+        List<String> lines = readFile(file);
+        List<String> descriptors = new ArrayList<>();
+        boolean done = false;
+
+        String lineToParse = lines.get(lineNumber);
+
+        //default['<>']['<>'}... = <>
+        lineToParse = lineToParse.replace("default['", "");
+        String firstDesc = lineToParse.substring(0, lineToParse.indexOf("'"));
+        descriptors.add(firstDesc);
+        lineToParse = lineToParse.replace(firstDesc + "']", "");
+
+        while(!done)
+        {
+
+            if(lineToParse.substring(0,1) == " " || lineToParse.substring(0,1) == "=")
+            {
+                done = true;
+            }
+            else
+            {
+                lineToParse = lineToParse.replace("['", "");
+                descriptors.add(lineToParse.substring(0, lineToParse.indexOf("'")));
+                lineToParse = lineToParse.replace("']", "");
+            }
+        }
+
+        while(lineToParse.substring(0,1) == " " || lineToParse.substring(0,1) == "=")
+        {
+            lineToParse = lineToParse.replace(lineToParse.substring(0, 1), "");
+        }
+
+        descriptors.add(lineToParse);
+
+        return descriptors;
+
+
+
     }
 }

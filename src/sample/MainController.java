@@ -7,18 +7,12 @@ import javafx.scene.control.ListView;
 import javax.swing.*;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class MainController {
 
@@ -34,6 +28,7 @@ public class MainController {
         if(lst_attributes != null)
         {
             populateAttributes();
+            lst_attributes.setCellFactory(TextFieldListCell.forListView());
         }
     }
 
@@ -57,7 +52,7 @@ public class MainController {
         try{
             createDefaultFile();
             FileManager fm = new FileManager();
-            fm.writeToFile("one" + "\n" + "two" + "\n" + "three", "default.rb");
+            //fm.writeToFile("one" + "\n" + "two" + "\n" + "three", "default.rb");
             Util ut = new Util();
             ut.openScene("AttributeList.fxml", "Attribute List", 600, 500);
 
@@ -75,8 +70,9 @@ public class MainController {
         try
         {
             Util ut = new Util();
+            lineEditing = -1;
             ut.openScene("EditAttribute.fxml", "Edit Attribute", 600, 500);
-            //countFileLines(currentFile);
+
         }
         catch (Exception e)
         {
@@ -89,6 +85,23 @@ public class MainController {
     private void handleNewDefaultButtonAction(ActionEvent event)
     {
 
+    }
+
+    //failing due to wrong event maybe?
+    @FXML
+    private void handleAttributeListEditStartAction(ActionEvent event)
+    {
+        try
+        {
+            Util ut = new Util();
+            lineEditing = lst_attributes.getSelectionModel().getSelectedIndex();
+            ut.openScene("EditAttribute.fxml", "Edit Attribute", 600, 500);
+
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
     }
 
     private void createDefaultFile() throws Exception
