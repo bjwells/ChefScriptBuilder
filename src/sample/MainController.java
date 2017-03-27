@@ -10,9 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +22,11 @@ import java.util.Scanner;
 
 public class MainController {
 
-    private File currentFile;
+    public static File currentFile;
+    public static int lineEditing;
 
     @FXML
     private ListView lst_attributes;
-
-    @FXML
-    private ListView lst_descriptors;
 
     @FXML
     protected void initialize()
@@ -34,11 +34,6 @@ public class MainController {
         if(lst_attributes != null)
         {
             populateAttributes();
-        }
-
-        if(lst_descriptors != null)
-        {
-            lst_descriptors.setCellFactory(TextFieldListCell.forListView());
         }
     }
 
@@ -61,20 +56,16 @@ public class MainController {
 
         try{
             createDefaultFile();
-            writeToFile("one" + "\n" + "two" + "\n" + "three", "default.rb");
-            openScene("AttributeList.fxml", "Attribute List", 600, 500);
+            FileManager fm = new FileManager();
+            fm.writeToFile("one" + "\n" + "two" + "\n" + "three", "default.rb");
+            Util ut = new Util();
+            ut.openScene("AttributeList.fxml", "Attribute List", 600, 500);
 
         }
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-    }
-
-    @FXML
-    private void handleNewDefaultButtonAction(ActionEvent event)
-    {
-
     }
 
     @FXML
@@ -83,7 +74,9 @@ public class MainController {
         //open edit screen
         try
         {
-            openScene("EditAttribute.fxml", "Edit Attribute", 600, 500);
+            Util ut = new Util();
+            ut.openScene("EditAttribute.fxml", "Edit Attribute", 600, 500);
+            //countFileLines(currentFile);
         }
         catch (Exception e)
         {
@@ -93,33 +86,9 @@ public class MainController {
     }
 
     @FXML
-    private void handleNewDescriptorButtonAction(ActionEvent event)
+    private void handleNewDefaultButtonAction(ActionEvent event)
     {
-        addItemToListView("New", lst_descriptors);
-    }
 
-    @FXML
-    private void handleCloneDescriptorSelected(ActionEvent event)
-    {
-        String selected = lst_descriptors.getSelectionModel().getSelectedItem().toString();
-
-        addItemToListView(selected, lst_descriptors);
-    }
-
-    @FXML
-    private void handleDeleteDescriptorSelected(ActionEvent event)
-    {
-        int selected = lst_descriptors.getSelectionModel().getSelectedIndex();
-
-        removeItemFromListView(selected, lst_descriptors);
-    }
-
-    private void openScene(String windowName, String title, int width, int height) throws Exception
-    {
-        Parent root = FXMLLoader.load(getClass().getResource(windowName));
-        Main.thePrimaryStage.setTitle(title);
-        Main.thePrimaryStage.setScene(new Scene(root, width, height));
-        Main.thePrimaryStage.show();
     }
 
     private void createDefaultFile() throws Exception
@@ -128,7 +97,7 @@ public class MainController {
         PrintWriter writer = new PrintWriter("default.rb", "UTF-8");
         writer.close();
 
-        this.currentFile = new File("default.rb");
+        currentFile = new File("default.rb");
     }
 
     private void deleteDefaultFile()
@@ -140,53 +109,15 @@ public class MainController {
         }
     }
 
-    private void writeToFile(String content, String fileURL) throws Exception
-    {
-        PrintWriter writer = new PrintWriter(fileURL, "UTF-8");
-        writer.println(content);
-        writer.close();
-    }
-
     private void populateAttributes()
     {
-        List<String> values = readFile("default.rb");
+        FileManager fm = new FileManager();
+        List<String> values = fm.readFile("default.rb");
         lst_attributes.setItems(FXCollections.observableArrayList(values));
     }
 
-    private List<String> readFile(String fileName) {
 
-        try{
-            Scanner s = new Scanner(new File(fileName));
-            ArrayList<String> list = new ArrayList<String>();
-            while (s.hasNextLine()){
-                list.add(s.nextLine());
-            }
-            s.close();
 
-            return list;
-        }
-        catch (Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
 
-        return null;
-    }
 
-    private void addItemToListView(String value, ListView listView)
-    {
-        if(listView != null)
-        {
-            List<String> values = (List<String>) FXCollections.observableArrayList(listView.getItems());
-            values.add(value);
-            listView.setItems(FXCollections.observableArrayList(values));
-        }
-    }
-
-    private void removeItemFromListView(int indexSelected, ListView listView)
-    {
-        List<String> values = (List<String>) FXCollections.observableArrayList(listView.getItems());
-        values.remove(indexSelected);
-        listView.setItems(FXCollections.observableArrayList(values));
-    }
 }
