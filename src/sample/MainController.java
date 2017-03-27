@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.cell.TextFieldListCell;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -33,6 +34,11 @@ public class MainController {
         if(lst_attributes != null)
         {
             populateAttributes();
+        }
+
+        if(lst_descriptors != null)
+        {
+            lst_descriptors.setCellFactory(TextFieldListCell.forListView());
         }
     }
 
@@ -89,7 +95,23 @@ public class MainController {
     @FXML
     private void handleNewDescriptorButtonAction(ActionEvent event)
     {
-        
+        addItemToListView("New", lst_descriptors);
+    }
+
+    @FXML
+    private void handleCloneDescriptorSelected(ActionEvent event)
+    {
+        String selected = lst_descriptors.getSelectionModel().getSelectedItem().toString();
+
+        addItemToListView(selected, lst_descriptors);
+    }
+
+    @FXML
+    private void handleDeleteDescriptorSelected(ActionEvent event)
+    {
+        int selected = lst_descriptors.getSelectionModel().getSelectedIndex();
+
+        removeItemFromListView(selected, lst_descriptors);
     }
 
     private void openScene(String windowName, String title, int width, int height) throws Exception
@@ -149,5 +171,22 @@ public class MainController {
         }
 
         return null;
+    }
+
+    private void addItemToListView(String value, ListView listView)
+    {
+        if(listView != null)
+        {
+            List<String> values = (List<String>) FXCollections.observableArrayList(listView.getItems());
+            values.add(value);
+            listView.setItems(FXCollections.observableArrayList(values));
+        }
+    }
+
+    private void removeItemFromListView(int indexSelected, ListView listView)
+    {
+        List<String> values = (List<String>) FXCollections.observableArrayList(listView.getItems());
+        values.remove(indexSelected);
+        listView.setItems(FXCollections.observableArrayList(values));
     }
 }
