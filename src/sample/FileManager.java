@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class FileManager {
 
 
+    //write to a file by passing the file URL
     public void writeToFile(String content, String fileURL) throws Exception
     {
         PrintWriter writer = new PrintWriter(fileURL, "UTF-8");
@@ -21,24 +22,31 @@ public class FileManager {
         writer.close();
     }
 
+    //write to a file by passing a file object (has issue where file isn't being cleared!)
     public void writeToFile(String content, File file) throws Exception
     {
         FileWriter fw = new FileWriter(file);
+        //clear the file before writing to it (this doesn't seem to work for some reason)
         fw.write("");
         fw.append(content);
         fw.close();
     }
 
+    //write to a specific line in a file by passing the file, content and what line to write to
     public void writeToFile(int line, String content, File file) throws Exception
     {
+        //get everything that's in the file
         List<String> fileLines = readFile(file);
 
+        //replace the line specified
         fileLines.remove(line);
         fileLines.add(line, content);
 
+        //call the write to file method, which should clear the file before writing the new content
         writeToFile(fileLines.toString(), file);
     }
 
+    //reads a file from the file's name and returns a list of strings, one string for each line
     public List<String> readFile(String fileName) {
 
         try{
@@ -59,6 +67,7 @@ public class FileManager {
         return null;
     }
 
+    //reads a file from the file object and returns a list of strings, one string for each line
     public List<String> readFile(File file) {
 
         try{
@@ -79,12 +88,14 @@ public class FileManager {
         return null;
     }
 
+    //counts the number of lines in the given file (untested!!)
     public int countFileLines(File file)
     {
         int count = 0;
         try{
             Scanner s = new Scanner(file);
             while (s.hasNextLine()){
+                s.nextLine();
                 count++;
             }
             s.close();
