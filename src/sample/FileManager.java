@@ -1,10 +1,10 @@
 package sample;
 
+import org.omg.CORBA.Environment;
+
 import javax.swing.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -50,7 +50,7 @@ public class FileManager {
         FileWriter fw = new FileWriter(file);
         for(String l : fileLines)
         {
-            fw.write(l);
+            fw.write(l + "\n");
         }
         fw.close();
     }
@@ -58,6 +58,11 @@ public class FileManager {
     //appends the content provided to the end of the file given.
     public void appendToFile(String content, File file) throws Exception
     {
+        if(countFileLines(file) != 0)
+        {
+            content = "\n" + content;
+        }
+
         Files.write(file.toPath(), content.getBytes(), StandardOpenOption.APPEND);
     }
 
@@ -86,12 +91,31 @@ public class FileManager {
     public List<String> readFile(File file) {
 
         try{
-            Scanner s = new Scanner(file);
             ArrayList<String> list = new ArrayList<String>();
-            while (s.hasNextLine()){
+            /*FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringBuffer stringBuffer = new StringBuffer();
+            String line;
+            while((line = bufferedReader.readLine()) != null)
+            {
+                stringBuffer.append(line);
+                stringBuffer.append("\n");
+            }
+            fileReader.close();*/
+
+            /*Scanner s = new Scanner(file);
+
+            while (s.hasNext()){
                 list.add(s.nextLine());
             }
-            s.close();
+            s.close();*/
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                list.add(line);
+            }
 
             return list;
         }

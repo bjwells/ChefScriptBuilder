@@ -122,7 +122,7 @@ public class MainController {
         }
     }
 
-    //not setting multi as multi lines? not sure why
+    //not setting multi as multi lines? not sure why. readFile doesn't pick up the line ending...
     private void populateAttributes()
     {
         FileManager fm = new FileManager();
