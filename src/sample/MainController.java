@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 import javax.swing.*;
 
@@ -25,6 +26,9 @@ public class MainController {
     private ListView lst_attributes;
 
     @FXML
+    private TextField txt_file_url;
+
+    @FXML
     protected void initialize()
     {
         if(lst_attributes != null)
@@ -39,6 +43,17 @@ public class MainController {
     {
         //button was clicked do something
         //JOptionPane.showMessageDialog(null, "clicked open button");
+        currentFile = new File(txt_file_url.getText());
+        Util ut = new Util();
+        try
+        {
+            ut.openAttributeScene();
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
     }
 
     @FXML
@@ -165,7 +180,7 @@ public class MainController {
     private void populateAttributes()
     {
         FileManager fm = new FileManager();
-        List<String> values = fm.readFile("default.rb");
+        List<String> values = fm.readFile(currentFile);
         lst_attributes.setItems(FXCollections.observableArrayList(values));
     }
 
