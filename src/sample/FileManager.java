@@ -18,25 +18,6 @@ import java.util.Scanner;
 public class FileManager {
 
 
-    //write to a file by passing the file URL
-    public void writeToFile(String content, String fileURL) throws Exception
-    {
-        PrintWriter writer = new PrintWriter(fileURL, "UTF-8");
-        writer.println(content);
-        writer.close();
-    }
-
-    //write to a file by passing a file object (has issue where file isn't being cleared!)
-    public void writeToFile(String content, File file) throws Exception
-    {
-        String fileURL = file.getAbsolutePath();
-        file.delete();
-        File newFile = new File(fileURL);
-        FileWriter fw = new FileWriter(newFile);
-        fw.append(content);
-        fw.close();
-    }
-
     //write to a specific line in a file by passing the file, content and what line to write to
     public void writeToFile(int line, String content, File file) throws Exception
     {
@@ -88,49 +69,11 @@ public class FileManager {
         fw.close();
     }
 
-    //reads a file from the file's name and returns a list of strings, one string for each line
-    public List<String> readFile(String fileName) {
-
-        try{
-            Scanner s = new Scanner(new File(fileName));
-            ArrayList<String> list = new ArrayList<String>();
-            while (s.hasNextLine()){
-                list.add(s.nextLine());
-            }
-            s.close();
-
-            return list;
-        }
-        catch (Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
-
-        return null;
-    }
-
     //reads a file from the file object and returns a list of strings, one string for each line
     public List<String> readFile(File file) {
 
         try{
             ArrayList<String> list = new ArrayList<String>();
-            /*FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            StringBuffer stringBuffer = new StringBuffer();
-            String line;
-            while((line = bufferedReader.readLine()) != null)
-            {
-                stringBuffer.append(line);
-                stringBuffer.append("\n");
-            }
-            fileReader.close();*/
-
-            /*Scanner s = new Scanner(file);
-
-            while (s.hasNext()){
-                list.add(s.nextLine());
-            }
-            s.close();*/
 
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
