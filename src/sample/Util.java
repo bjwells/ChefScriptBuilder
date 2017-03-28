@@ -20,6 +20,22 @@ public class Util {
         Main.thePrimaryStage.show();
     }
 
+    public void openAttributeScene() throws Exception
+    {
+        Parent root = FXMLLoader.load(getClass().getResource("AttributeList.fxml"));
+        Main.thePrimaryStage.setTitle("Attribute List");
+        Main.thePrimaryStage.setScene(new Scene(root, 600, 500));
+        Main.thePrimaryStage.show();
+    }
+
+    public void openEditScene() throws Exception
+    {
+        Parent root = FXMLLoader.load(getClass().getResource("EditAttribute.fxml"));
+        Main.thePrimaryStage.setTitle("Edit Attribute");
+        Main.thePrimaryStage.setScene(new Scene(root, 600, 500));
+        Main.thePrimaryStage.show();
+    }
+
     public void addItemToListView(String value, ListView listView)
     {
         if(listView != null)

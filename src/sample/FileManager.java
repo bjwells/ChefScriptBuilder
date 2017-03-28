@@ -55,15 +55,37 @@ public class FileManager {
         fw.close();
     }
 
+    public void removeLineFromFile(int line, File file) throws Exception
+    {
+        //get everything that's in the file
+        List<String> fileLines = readFile(file);
+
+        //replace the line specified
+        fileLines.remove(line);
+
+        FileWriter fw = new FileWriter(file);
+        for(String l : fileLines)
+        {
+            fw.write(l + "\n");
+        }
+        fw.close();
+    }
+
     //appends the content provided to the end of the file given.
     public void appendToFile(String content, File file) throws Exception
     {
-        if(countFileLines(file) != 0)
-        {
-            content = "\n" + content;
-        }
+        //get everything that's in the file
+        List<String> fileLines = readFile(file);
 
-        Files.write(file.toPath(), content.getBytes(), StandardOpenOption.APPEND);
+        //add the line given
+        fileLines.add(content);
+
+        FileWriter fw = new FileWriter(file);
+        for(String l : fileLines)
+        {
+            fw.write(l + "\n");
+        }
+        fw.close();
     }
 
     //reads a file from the file's name and returns a list of strings, one string for each line

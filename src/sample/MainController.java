@@ -56,7 +56,7 @@ public class MainController {
             FileManager fm = new FileManager();
             //fm.writeToFile("one" + "\n" + "two" + "\n" + "three", "default.rb");
             Util ut = new Util();
-            ut.openScene("AttributeList.fxml", "Attribute List", 600, 500);
+            ut.openAttributeScene();
 
         }
         catch (Exception e)
@@ -78,7 +78,7 @@ public class MainController {
         {
             Util ut = new Util();
             lineEditing = -1;
-            ut.openScene("EditAttribute.fxml", "Edit Attribute", 600, 500);
+            ut.openEditScene();
 
         }
         catch (Exception e)
@@ -95,8 +95,47 @@ public class MainController {
         {
             Util ut = new Util();
             lineEditing = lst_attributes.getSelectionModel().getSelectedIndex();
-            ut.openScene("EditAttribute.fxml", "Edit Attribute", 600, 500);
+            ut.openEditScene();
 
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+    }
+
+    @FXML
+    private void handleCloneAttributeSelected(ActionEvent event)
+    {
+        String selected = lst_attributes.getSelectionModel().getSelectedItem().toString();
+
+        Util ut = new Util();
+        ut.addItemToListView(selected, lst_attributes);
+        FileManager fm = new FileManager();
+        try
+        {
+            fm.appendToFile(selected, currentFile);
+            ut.openAttributeScene();
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
+    }
+
+    @FXML
+    private void handleDeleteAttributeSelected(ActionEvent event)
+    {
+        int selected = lst_attributes.getSelectionModel().getSelectedIndex();
+
+        Util ut = new Util();
+        ut.removeItemFromListView(selected, lst_attributes);
+        FileManager fm = new FileManager();
+        try
+        {
+            fm.removeLineFromFile(selected, currentFile);
+            ut.openAttributeScene();
         }
         catch (Exception e)
         {
