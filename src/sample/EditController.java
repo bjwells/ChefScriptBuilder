@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -22,12 +23,25 @@ public class EditController {
     @FXML
     protected void initialize()
     {
-        //populate the descriptor list from the line of the file given
 
 
         if(lst_descriptors != null)
         {
             lst_descriptors.setCellFactory(TextFieldListCell.forListView());
+
+            if(MainController.lineEditing != -1)
+            {
+                //populate the descriptor list from the line of the file given
+                FileManager fm = new FileManager();
+                List<String> descs = fm.getDescriptorsFromFileLine(MainController.lineEditing, MainController.currentFile);
+
+                String value = descs.get(descs.size() - 1);
+
+                descs.remove(descs.size() - 1);
+
+                lst_descriptors.setItems(FXCollections.observableArrayList(descs));
+                txt_value.setText(value);
+            }
         }
     }
 

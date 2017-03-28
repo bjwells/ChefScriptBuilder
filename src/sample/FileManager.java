@@ -29,9 +29,10 @@ public class FileManager {
     //write to a file by passing a file object (has issue where file isn't being cleared!)
     public void writeToFile(String content, File file) throws Exception
     {
-        FileWriter fw = new FileWriter(file);
-        //clear the file before writing to it (this doesn't seem to work for some reason)
-        fw.write("");
+        String fileURL = file.getAbsolutePath();
+        file.delete();
+        File newFile = new File(fileURL);
+        FileWriter fw = new FileWriter(newFile);
         fw.append(content);
         fw.close();
     }
@@ -46,8 +47,12 @@ public class FileManager {
         fileLines.remove(line);
         fileLines.add(line, content);
 
-        //call the write to file method, which should clear the file before writing the new content
-        writeToFile(fileLines.toString(), file);
+        FileWriter fw = new FileWriter(file);
+        for(String l : fileLines)
+        {
+            fw.write(l);
+        }
+        fw.close();
     }
 
     //appends the content provided to the end of the file given.
@@ -136,7 +141,7 @@ public class FileManager {
         while(!done)
         {
 
-            if(lineToParse.substring(0,1) == " " || lineToParse.substring(0,1) == "=")
+            if(lineToParse.substring(0,1).equals(" ") || lineToParse.substring(0,1).equals("="))
             {
                 done = true;
             }
@@ -148,7 +153,7 @@ public class FileManager {
             }
         }
 
-        while(lineToParse.substring(0,1) == " " || lineToParse.substring(0,1) == "=")
+        while(lineToParse.substring(0,1).equals(" ") || lineToParse.substring(0,1).equals("="))
         {
             lineToParse = lineToParse.replace(lineToParse.substring(0, 1), "");
         }

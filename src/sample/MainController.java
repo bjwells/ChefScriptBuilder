@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
@@ -8,6 +9,7 @@ import javax.swing.*;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.KeyEvent;
 
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -62,6 +64,11 @@ public class MainController {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
+    @FXML
+    private void handleNewDefaultButtonAction(ActionEvent event)
+    {
+
+    }
 
     @FXML
     private void handleAddNewAttributeButtonAction(ActionEvent event)
@@ -82,14 +89,7 @@ public class MainController {
     }
 
     @FXML
-    private void handleNewDefaultButtonAction(ActionEvent event)
-    {
-
-    }
-
-    //failing due to wrong event maybe?
-    @FXML
-    private void handleAttributeListEditStartAction(ActionEvent event)
+    private void handleEditAttributeButtonAction(ActionEvent event)
     {
         try
         {
@@ -122,6 +122,7 @@ public class MainController {
         }
     }
 
+    //not setting multi as multi lines? not sure why
     private void populateAttributes()
     {
         FileManager fm = new FileManager();
