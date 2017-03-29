@@ -113,6 +113,8 @@ public class FileManager {
         return count;
     }
 
+    //has glitch where it is replacing all instances (causes problem when value also contains the string)
+    //this whole thing should be changed to delete by substring not the string value
     public List<String> getDescriptorsFromFileLine(int lineNumber, File file)
     {
         List<String> lines = readFile(file);
@@ -126,10 +128,12 @@ public class FileManager {
         {
             if(lineToParse.substring(0,1).equals("#") == false)
             {
-                lineToParse = lineToParse.replace("default['", "");
+                //lineToParse = lineToParse.replace("default['", "");
+                lineToParse = lineToParse.substring(9);
                 String firstDesc = lineToParse.substring(0, lineToParse.indexOf("'"));
                 descriptors.add(firstDesc);
-                lineToParse = lineToParse.replace(firstDesc + "']", "");
+                //lineToParse = lineToParse.replace(firstDesc + "']", "");
+                lineToParse = lineToParse.substring(firstDesc.length() + 2);
 
 
                 while(!done)
@@ -142,15 +146,16 @@ public class FileManager {
                     else
                     {
                         lineToParse = lineToParse.substring(2);
-                        descriptors.add(lineToParse.substring(0, lineToParse.indexOf("'")));
-                        lineToParse = lineToParse.replace(lineToParse.substring(0, lineToParse.indexOf("'")), "");
-                        lineToParse = lineToParse.substring(2);
+                        String desc = lineToParse.substring(0, lineToParse.indexOf("'"));
+                        descriptors.add(desc);
+                        //lineToParse = lineToParse.replace(lineToParse.substring(0, lineToParse.indexOf("'")), "");
+                        lineToParse = lineToParse.substring(desc.length() + 2);
                     }
                 }
 
                 while(lineToParse.substring(0,1).equals(" ") || lineToParse.substring(0,1).equals("="))
                 {
-                    lineToParse = lineToParse.replace(lineToParse.substring(0, 1), "");
+                    lineToParse = lineToParse.substring(1);
                 }
 
                 //remove " from around value
@@ -167,4 +172,5 @@ public class FileManager {
 
 
     }
+
 }
