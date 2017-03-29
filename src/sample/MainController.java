@@ -79,11 +79,6 @@ public class MainController {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
-    @FXML
-    private void handleNewDefaultButtonAction(ActionEvent event)
-    {
-
-    }
 
     @FXML
     private void handleAddNewAttributeButtonAction(ActionEvent event)

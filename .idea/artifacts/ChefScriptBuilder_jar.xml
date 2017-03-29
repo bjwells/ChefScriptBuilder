@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ChefScriptBuilder:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ChefScriptBuilder_jar</output-path>
+    <root id="archive" name="ChefScriptBuilder.jar">
+      <element id="module-output" name="ChefScriptBuilder" />
+    </root>
+  </artifact>
+</component>
