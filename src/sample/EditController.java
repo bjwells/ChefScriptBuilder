@@ -33,14 +33,19 @@ public class EditController {
             {
                 //populate the descriptor list from the line of the file given
                 FileManager fm = new FileManager();
+
                 List<String> descs = fm.getDescriptorsFromFileLine(MainController.lineEditing, MainController.currentFile);
 
-                String value = descs.get(descs.size() - 1);
+                if(descs != null)
+                {
+                    String value = descs.get(descs.size() - 1);
 
-                descs.remove(descs.size() - 1);
+                    descs.remove(descs.size() - 1);
 
-                lst_descriptors.setItems(FXCollections.observableArrayList(descs));
-                txt_value.setText(value);
+                    lst_descriptors.setItems(FXCollections.observableArrayList(descs));
+                    txt_value.setText(value);
+                }
+
             }
         }
     }
@@ -77,36 +82,64 @@ public class EditController {
         //write all descriptors and value to the file in correct format
         List<String> values = (List<String>) lst_descriptors.getItems();
         String value = txt_value.getText();
-        String toWrite = "default";
 
-        for(String v : values)
+        if(values != null)
         {
-            toWrite += "['" + v + "']";
-        }
-
-        toWrite += " = " + value;
-
-        try{
-            //writeToFile(toWrite, currentFile);
-            FileManager fm = new FileManager();
-            if(MainController.lineEditing != -1)
+            if(values.size() != 0)
             {
-                fm.writeToFile(MainController.lineEditing, toWrite, MainController.currentFile);
+                String toWrite = "default";
+
+                for(String v : values)
+                {
+                    toWrite += "['" + v + "']";
+                }
+
+                toWrite += " = " + "\"" + value + "\"";
+
+                try{
+                    //writeToFile(toWrite, currentFile);
+                    FileManager fm = new FileManager();
+                    if(MainController.lineEditing != -1)
+                    {
+                        fm.writeToFile(MainController.lineEditing, toWrite, MainController.currentFile);
+                    }
+                    else
+                    {
+                        //write to the end of file
+                        fm.appendToFile(toWrite, MainController.currentFile);
+                    }
+
+
+
+                }
+                catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
             }
             else
             {
-                //write to the end of file
-                fm.appendToFile(toWrite, MainController.currentFile);
+                JOptionPane.showMessageDialog(null, "No values given for default, nothing written to file.");
+
             }
 
-            Util ut = new Util();
-            ut.openScene("AttributeList.fxml", "Attribute List", 600, 500);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No values given for default, nothing written to file.");
+        }
 
+        Util ut = new Util();
+        try
+        {
+            ut.openScene("AttributeList.fxml", "Attribute List", 600, 500);
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
+
+
     }
 
 

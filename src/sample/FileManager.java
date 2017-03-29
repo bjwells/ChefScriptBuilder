@@ -86,7 +86,7 @@ public class FileManager {
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         return null;
@@ -107,7 +107,7 @@ public class FileManager {
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         return count;
@@ -120,37 +120,50 @@ public class FileManager {
         boolean done = false;
 
         String lineToParse = lines.get(lineNumber);
+        lineToParse = lineToParse.replaceAll("\t", "");
 
-        //default['<>']['<>'}... = <>
-        lineToParse = lineToParse.replace("default['", "");
-        String firstDesc = lineToParse.substring(0, lineToParse.indexOf("'"));
-        descriptors.add(firstDesc);
-        lineToParse = lineToParse.replace(firstDesc + "']", "");
-
-        while(!done)
+        if(lineToParse.equals("") == false)
         {
+            if(lineToParse.substring(0,1).equals("#") == false)
+            {
+                lineToParse = lineToParse.replace("default['", "");
+                String firstDesc = lineToParse.substring(0, lineToParse.indexOf("'"));
+                descriptors.add(firstDesc);
+                lineToParse = lineToParse.replace(firstDesc + "']", "");
 
-            if(lineToParse.substring(0,1).equals(" ") || lineToParse.substring(0,1).equals("="))
-            {
-                done = true;
+
+                while(!done)
+                {
+
+                    if(lineToParse.substring(0,1).equals(" ") || lineToParse.substring(0,1).equals("="))
+                    {
+                        done = true;
+                    }
+                    else
+                    {
+                        lineToParse = lineToParse.substring(2);
+                        descriptors.add(lineToParse.substring(0, lineToParse.indexOf("'")));
+                        lineToParse = lineToParse.replace(lineToParse.substring(0, lineToParse.indexOf("'")), "");
+                        lineToParse = lineToParse.substring(2);
+                    }
+                }
+
+                while(lineToParse.substring(0,1).equals(" ") || lineToParse.substring(0,1).equals("="))
+                {
+                    lineToParse = lineToParse.replace(lineToParse.substring(0, 1), "");
+                }
+
+                //remove " from around value
+                lineToParse = lineToParse.replaceAll("\"", "");
+
+                descriptors.add(lineToParse);
+
+                return descriptors;
             }
-            else
-            {
-                lineToParse = lineToParse.replace("['", "");
-                descriptors.add(lineToParse.substring(0, lineToParse.indexOf("'")));
-                lineToParse = lineToParse.replace("']", "");
-            }
+
         }
 
-        while(lineToParse.substring(0,1).equals(" ") || lineToParse.substring(0,1).equals("="))
-        {
-            lineToParse = lineToParse.replace(lineToParse.substring(0, 1), "");
-        }
-
-        descriptors.add(lineToParse);
-
-        return descriptors;
-
+        return null;
 
 
     }
